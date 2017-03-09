@@ -14,6 +14,7 @@ func main()  {
 	}))
 
 	e.Renderer = render.LoadTemplates()
+	e.Use(render.Render())
 	e.Static("/static", "static")
 
 	// Admin pages

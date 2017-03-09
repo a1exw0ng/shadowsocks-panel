@@ -10,8 +10,8 @@ type UserCtx struct {
 }
 
 func NewUserCtx() *UserCtx{
-	ac := AdminCtx{}
-	return &ac
+	ac := &UserCtx{}
+	return ac
 }
 
 func (ac *UserCtx) Index(c echo.Context) error {

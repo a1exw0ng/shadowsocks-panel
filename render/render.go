@@ -8,7 +8,7 @@ import (
 	"html/template"
 	"fmt"
 	"net/http"
-	"github.com/juju/errors"
+	"errors"
 )
 
 func Render() echo.MiddlewareFunc {
@@ -23,8 +23,11 @@ func render() echo.MiddlewareFunc {
 			}
 
 			tmpl, context, err := getContext(c)
+			fmt.Println(tmpl)
+			fmt.Println(context)
+
 			if err == nil{
-				c.Render(http.StatusOK, tmpl, context)
+				c.Render(http.StatusOK, "views/"+tmpl+".html", context)
 			} else {
 				c.Logger().Errorf("Render Error: %v, tmpl %v, content %v", err, tmpl, context)
 			}
@@ -75,14 +78,16 @@ func loadTemplatesDefault(templateDir string) *multitemplate.Render {
 
 	layoutDir := templateDir
 	layouts, err := filepath.Glob(layoutDir + "*/*.html" )
+	fmt.Println("Layouts=", layouts)
 	if err != nil {
 		panic(err.Error())
 	}
 
+	tmpl := template.Must(template.ParseFiles(layouts...))
 	// Generate our templates map from our layouts/ and includes/ directories
 	for _, layout := range layouts {
 		//files := append(includes, layout)
-		tmpl := template.Must(template.ParseFiles(layout...))
+
 		tmplName := strings.TrimPrefix(layout, layoutDir)
 		tmplName = strings.TrimSuffix(tmplName, ".html")
 		//log.DebugPrint("Tmpl add " + tmplName)
