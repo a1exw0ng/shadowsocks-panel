@@ -1,51 +1,93 @@
-// Base on github.com/gin-gonic/contrib/renders/multitemplate
-package multitemplate
+package render
 
 import (
-	"html/template"
-	"io"
 	"github.com/labstack/echo"
+	"github.com/hobo-go/echo-mw/multitemplate"
+	"path/filepath"
+	"strings"
+	"html/template"
+	"fmt"
+	"net/http"
+	"github.com/juju/errors"
 )
 
-/**
- *
- */
-type Render map[string]*template.Template
-
-func New() Render {
-	return make(Render)
+func Render() echo.MiddlewareFunc {
+	return render()
 }
 
-func (r Render) Add(name string, tmpl *template.Template) {
-	if tmpl == nil {
-		panic("template can not be nil")
+func render() echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc{
+		return func(c echo.Context) error {
+			if err := next(c); err != nil{
+				c.Error(err)
+			}
+
+			tmpl, context, err := getContext(c)
+			if err == nil{
+				c.Render(http.StatusOK, tmpl, context)
+			} else {
+				c.Logger().Errorf("Render Error: %v, tmpl %v, content %v", err, tmpl, context)
+			}
+
+			return nil
+		}
 	}
-	if len(name) == 0 {
-		panic("template name cannot be empty")
+}
+
+func getContext(c echo.Context) (tmpl string, context map[string]interface{}, err error) {
+	tmplName := c.Get("tmpl")
+	tmplNameValue, isString := tmplName.(string)
+	tmplData := c.Get("data")
+
+	//模板未定义
+	if !isString {
+		return "", nil, errors.New("No tmpl defined!")
 	}
-	r[name] = tmpl
+
+	//公共模板数据
+	commonDatas := getCommonContext(c)
+
+	//模板数据
+	if tmplData != nil {
+		contextData, isMap := tmplData.(map[string]interface{})
+
+		if isMap {
+			for key, value := range commonDatas {
+				contextData[key] = value
+			}
+			return tmplNameValue, contextData, nil
+		}
+	}
+
+	return tmplNameValue, commonDatas, nil
 }
 
-func (r Render) AddFromFiles(name string, files ...string) *template.Template {
-	tmpl := template.Must(template.ParseFiles(files...))
-	r.Add(name, tmpl)
-	return tmpl
+func getCommonContext(c echo.Context) map[string]interface{}{
+	//例如auth
+	return nil
+}
+func LoadTemplates() echo.Renderer {
+	return loadTemplatesDefault("views")
 }
 
-func (r Render) AddFromGlob(name, glob string) *template.Template {
-	tmpl := template.Must(template.ParseGlob(glob))
-	r.Add(name, tmpl)
-	return tmpl
-}
+func loadTemplatesDefault(templateDir string) *multitemplate.Render {
+	r := multitemplate.New()
 
-func (r *Render) AddFromString(name, templateString string) *template.Template {
-	tmpl := template.Must(template.New("").Parse(templateString))
-	r.Add(name, tmpl)
-	return tmpl
-}
+	layoutDir := templateDir
+	layouts, err := filepath.Glob(layoutDir + "*/*.html" )
+	if err != nil {
+		panic(err.Error())
+	}
 
-func (r Render) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	var t *template.Template
-	t = r[name]
-	return t.Execute(w, data)
-}}
+	// Generate our templates map from our layouts/ and includes/ directories
+	for _, layout := range layouts {
+		//files := append(includes, layout)
+		tmpl := template.Must(template.ParseFiles(layout...))
+		tmplName := strings.TrimPrefix(layout, layoutDir)
+		tmplName = strings.TrimSuffix(tmplName, ".html")
+		//log.DebugPrint("Tmpl add " + tmplName)
+		fmt.Println("Tmpl add " + tmplName)
+		r.Add(tmplName, tmpl)
+	}
+	return &r
+}
