@@ -22,7 +22,7 @@ func GetUserByNicknamePwd(name, pwd string) *User {
 }
 
 func CreateUserByNamePwd(name, pwd string) error{
-	_, err := db.Exec("insert into user (name, pwd) values ($1, $2)", name, pwd)
+	_, err := db.Exec("insert into user (name, password) values ($1, $2)", name, pwd)
 	if err != nil{
 		fmt.Println("Insert into user failed", err.Error())
 		return err

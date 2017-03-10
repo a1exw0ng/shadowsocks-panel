@@ -35,6 +35,12 @@ func (pub *Register) PostRegister(c *s.Context) error {
 	password := c.FormValue("password")
 
 	if (false == models.CheckUserExistence(username)){
+
+		err := models.CreateUserByNamePwd(username, password)
+		if err != nil{
+			fmt.Println("Insert into database failed", err.Error())
+			return err
+		}
 		u := models.GetUserByNicknamePwd(username, password)
 
 		if u != nil{
