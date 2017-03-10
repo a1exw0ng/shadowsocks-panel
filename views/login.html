@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>Login</title>
+    <script type="text/javascript" src="/static/js/text.js"></script>
+    <script type="text/css" src="/static/css/text.css"></script>
+</head>
+
+<body>
+<div id="DIV_FORM">
+    <form method="post" action="/login" >
+        <table id="TABLE">
+            <tbody>
+            <tr>
+                <td>用户名：</td>
+                <td>
+                    <input name="username"  id="USERNAME" type="text" onfocus="showDesc(this)" onblur="checkText(this)"/>
+                </td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td>
+                    <input name="password" id="PASSWORD" type="text" onfocus="showDesc(this)" onblur="checkText(this)"/>
+                </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td align="right">
+                    <input type="submit" value="确认提交" />
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table id="TABLE2" border="0">
+            <tr><td><span id="username">请输入用户名</span></td></tr>
+            <tr><td><span id="password">请输入密码</span></td></tr>
+        </table>
+    </form>
+</div>
+</body>
+
+</html>

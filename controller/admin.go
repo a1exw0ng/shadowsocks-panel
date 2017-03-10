@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/labstack/echo"
-	"net/http"
 )
 
 type AdminCtx struct {
@@ -15,5 +14,9 @@ func NewAdminCtx() *AdminCtx{
 }
 
 func (ac *AdminCtx) Index(c echo.Context) error {
-	return c.String(http.StatusOK, "You're admin")
+	c.Set("tmpl", "admin")
+	c.Set("data", map[string]interface{}{
+		"hello":"World",
+	})
+	return nil
 }

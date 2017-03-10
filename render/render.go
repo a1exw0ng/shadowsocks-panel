@@ -27,7 +27,7 @@ func render() echo.MiddlewareFunc {
 			fmt.Println(context)
 
 			if err == nil{
-				c.Render(http.StatusOK, "views/"+tmpl+".html", context)
+				c.Render(http.StatusOK, tmpl, context)
 			} else {
 				c.Logger().Errorf("Render Error: %v, tmpl %v, content %v", err, tmpl, context)
 			}
@@ -83,15 +83,17 @@ func loadTemplatesDefault(templateDir string) *multitemplate.Render {
 		panic(err.Error())
 	}
 
-	tmpl := template.Must(template.ParseFiles(layouts...))
+
 	// Generate our templates map from our layouts/ and includes/ directories
 	for _, layout := range layouts {
 		//files := append(includes, layout)
-
-		tmplName := strings.TrimPrefix(layout, layoutDir)
+		//tmpl := template.Must(template.ParseFiles(layouts...))
+		fmt.Println(layout)
+		tmpl := template.Must(template.ParseFiles(layout))
+		tmplName := strings.TrimPrefix(layout, layoutDir+"/")
 		tmplName = strings.TrimSuffix(tmplName, ".html")
 		//log.DebugPrint("Tmpl add " + tmplName)
-		fmt.Println("Tmpl add " + tmplName)
+		//fmt.Println("Tmpl add " + tmplName)
 		r.Add(tmplName, tmpl)
 	}
 	return &r
