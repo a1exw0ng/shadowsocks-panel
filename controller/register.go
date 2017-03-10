@@ -3,6 +3,10 @@ package controller
 import (
 	"github.com/labstack/echo"
 	"fmt"
+	"../models"
+	"net/http"
+	s "../session"
+	"../auth"
 )
 
 type Register struct {
@@ -22,9 +26,31 @@ func (pub *Register) Register(c echo.Context) error {
 	return nil
 }
 
-func (pub *Register) PostRegister(c echo.Context) error {
-	fmt.Println(c.FormValue("username"))
+func (pub *Register) PostRegister(c *s.Context) error {
+	fmt.Println()
 	fmt.Println(c.FormValue("password"))
 	fmt.Println(c.FormValue("email"))
+
+	username := c.FormValue("username")
+	password := c.FormValue("password")
+
+	if (false == models.CheckUserExistence(username)){
+		u := models.GetUserByNicknamePwd(username, password)
+
+		if u != nil{
+			session := c.Session()
+			err := auth.AuthenticateSession(session, u)
+			if err != nil {
+				c.JSON(http.StatusBadRequest, err)
+			}
+			c.Redirect(http.StatusMovedPermanently, "/")
+			return nil
+		} else {
+			c.Redirect(http.StatusMovedPermanently, "/register")
+			return nil
+		}
+	}
+
+
 	return nil
 }

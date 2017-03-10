@@ -11,6 +11,9 @@ import (
 )
 
 func main()  {
+
+	models.InitDB("test.db")
+
 	e := echo.New()
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format:"time=${time_rfc3339}, method=${method}, uri=${uri}, status=${status}\n",
@@ -46,7 +49,7 @@ func main()  {
 
 	regCtx := controller.NewRegisterCtx()
 	e.GET("/register", regCtx.Register)
-	e.POST("/register", regCtx.PostRegister)
+	e.POST("/register", handler(regCtx.PostRegister))
 	e.GET("/login", controller.Login)
 	e.POST("/login", handler(controller.PostLogin))
 
