@@ -18,6 +18,7 @@ func GetUserByNicknamePwd(name, pwd string) *User {
 			return nil
 		}
 	}
+	fmt.Println(u.Id, u.Nickname, u.Password)
 	return &u
 }
 

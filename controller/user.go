@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/labstack/echo"
-	"net/http"
 )
 
 type UserCtx struct {
@@ -15,5 +14,10 @@ func NewUserCtx() *UserCtx{
 }
 
 func (ac *UserCtx) Index(c echo.Context) error {
-	return c.String(http.StatusOK, "You're a user")
+	c.Set("tmpl", "user")
+	c.Set("data", map[string]interface{}{
+		"Password":"Helloworld",
+		"Port":900,
+	})
+	return nil
 }
