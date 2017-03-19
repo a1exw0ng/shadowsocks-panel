@@ -19,9 +19,10 @@ func Login(c echo.Context) error {
 
 func PostLogin(c *s.Context) error {
 
-	name := c.FormValue("username")
-	password := c.FormValue("password")
-	//email := c.FormValue("email")
+	fmt.Println(c.FormParams())
+	//name := c.FormValue("username")
+	password := c.FormValue("passwd")
+	email := c.FormValue("email")
 	redirect := c.QueryParam(auth.RedirectParam)
 	fmt.Println(c.QueryString())
 	fmt.Println("auth.RedirectParam", auth.RedirectParam, redirect)
@@ -32,11 +33,14 @@ func PostLogin(c *s.Context) error {
 	a := c.Auth()
 	fmt.Println("redirect--", redirect)
 	if a.User.IsAuthenticated() {
+		fmt.Println("is authenticated")
 		c.Redirect(http.StatusMovedPermanently, redirect)
 		return nil
 	}
 
-	u := models.GetUserByNicknamePwd(name, password)
+	//u := models.GetUserByNicknamePwd(name, password)
+	u := models.GetUserByMailPwd(email, password)
+	fmt.Println("user=", u)
 	if u != nil{
 		session := c.Session()
 		err := auth.AuthenticateSession(session, u)

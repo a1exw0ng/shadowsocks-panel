@@ -46,6 +46,17 @@ func main()  {
 	pubCtx := controller.NewPublicCtx()
 
 	e.GET("/", pubCtx.Index)
+	e.GET("/index.html", pubCtx.Index)
+	e.GET("/download.html", pubCtx.Download)
+	e.GET("/uorder.html", pubCtx.UOrder)
+	e.GET("/invite.html", pubCtx.Invite)
+	e.GET("/how.html", pubCtx.How)
+	e.GET("/user.html", pubCtx.User)
+	e.GET("/buy.html", pubCtx.Buy)
+	e.GET("/changepw.html", pubCtx.ChangePW)
+	e.GET("/node.html", pubCtx.Node)
+	e.GET("/tos.html", pubCtx.Tos)
+	e.GET("/logout.html", pubCtx.Logout)
 
 	regCtx := controller.NewRegisterCtx()
 	e.GET("/register", regCtx.Register)

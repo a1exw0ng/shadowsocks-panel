@@ -12,6 +12,7 @@ type User struct {
 	Nickname  string    `form:"nickname" json:"nickname,omitempty"`
 	Password  string    `form:"password" json:"-"`
 	Gender    int64     `json:"gender,omitempty"`
+	Email	  string    `json:email,omitempty`
 	Birthday  time.Time `json:"birthday,omitempty"`
 	CreatedAt time.Time `gorm:"column:created_time" json:"created_time,omitempty"`
 	UpdatedAt time.Time `gorm:"column:updated_time" json:"updated_time,omitempty"`

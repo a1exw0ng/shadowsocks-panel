@@ -22,6 +22,27 @@ func GetUserByNicknamePwd(name, pwd string) *User {
 	return &u
 }
 
+
+func GetUserByMailPwd(email, pwd string) *User {
+	var u User
+	rows, err := db.Query("select * from user where email=$1 and password=$2", email, pwd)
+	if err != nil{
+		fmt.Println("GetUserByEmailPwd failed", err.Error())
+		return nil
+	}
+	defer rows.Close()
+
+	for rows.Next(){
+		err = rows.Scan(&u.Id, &u.Email, &u.Password)
+		if err != nil {
+			fmt.Println("Get Id failed", err.Error())
+			return nil
+		}
+	}
+	fmt.Println(u.Id, u.Email, u.Password)
+	return &u
+}
+
 func CreateUserByNamePwd(name, pwd string) error{
 	_, err := db.Exec("insert into user (name, password) values ($1, $2)", name, pwd)
 	if err != nil{

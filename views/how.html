@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>求真街|Shadowsocks科学上网服务</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link rel="shortcut icon" type="images/x-icon" href="image/favicon.ico"> <!--link标签定义文档与外部资源的关系，rel属性规定当前文档与被链接文档之间的关系 -->
+
+    <meta name="keywords" content="shadowsocks,vpn,ipsec,科学上网,青虹" />
+    <meta name="description" content="求真街专注提供稳定可靠的Shadowsocks服务,拥有美国、日本、新加坡、香港优质服务线路，不限流量,windows、Mac、iOS、Andriod多平台完美支持。"/>
+    <!-- Bootstrap 3.3.2 -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <!--
+    <link href="https://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    -->
+    <!-- Theme style -->
+    <link href="/static/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="http://bg-1253279471.cosgz.myqcloud.com/xy.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="/static/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+
+
+    <link href="/static/css/fonts1.css" rel="stylesheet" type='text/css'>
+    <link href="/static/css/fonts2.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+
+    <!--
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    -->
+    <script src="/static/js/jquery-1.12.3.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+
+    <script>
+
+	$(document).ready(function(){
+
+	var a1 = document.URL;
+	var a2 = $("#nav-show a");
+
+	//alert(a1);
+	//document.write("<p>My First JavaScript</p>");
+	//document.write(a1);
+	//document.write($(a2[0]).attr("href"));
+
+	for (var i = 0; i < a2.length; i++) {
+		//document.write($(a2[i]).attr("href"));
+
+		if (a1.indexOf($(a2[i]).attr("href")) != -1) {
+			$(a2[i]).parent().addClass("active");
+			return;
+		}
+	}
+	$(a2[0]).parent().addClass("active");
+
+	});
+	</script>
+
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="0">
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92630141-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- Site wrapper -->
+
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <a class="navbar-brand" href="user.html">求真街</a> </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left" id="nav-show">
+
+                <li> <a href="user.html" class="smoothScroll"> 首页</a></li>
+                <li> <a href="node.html" class="smoothScroll"> 服务器列表</a></li>
+                <li> <a href="buy.html" class="smoothScroll"> 购买套餐</a></li>
+                <li> <a href="invite.html" class="smoothScroll"> 邀请好友</a></li>
+                <li> <a href="download.html" class="smoothScroll"> 下载</a></li>
+                <li> <a href="how.html" class="smoothScroll"> 教程</a></li>
+            </ul>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class='fa fa-user'></i>601269358@qq.com<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="uorder.html"><div class="centered">订单查询</div></a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="changepw.html"><div class="centered">修改密码</div></a></li>
+                    </ul>
+                </li>
+                <li><a href="logout.html"><i class="fa fa-sign-in"></i>&nbsp;退出</a></li>
+
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div><!--narbar-->
+
+
+
+<!-- =============================================== -->
+
+
+<!-- =============================================== -->
+
+<!-- Content Wrapper. Contains page content -->
+<div class="container" id="bodywrap">
+
+    <div class="panel panel-default content_panel col-md-10 col-md-offset-1">
+        <div class="panel-body">
+
+            <ul id="myTab" class="nav nav-tabs">
+                <li class="active">
+                    <a href="#andriod" data-toggle="tab">
+                        Andriod教程
+                    </a>
+                </li>
+                <li>
+                    <a href="#ios" data-toggle="tab">IOS教程</a>
+                </li>
+                <li>
+                    <a href="#windows" data-toggle="tab">Windows教程</a>
+                </li>
+                <li>
+                    <a href="#mac" data-toggle="tab">Mac教程</a>
+                </li>
+
+
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade in active" id="andriod">
+
+                    <div class="container">
+
+                        <br/>
+
+                        <p>1、试用请先激活账号（注册邮箱会收到激活链接）；下载APP安装，地址是：<a href="download.php">www.qiuzhenstreet.com/download.php</a> </p>
+                        <p>2、安装完成后打开APP，在“服务器”栏填写服务器地址，<a href="node.php" target="_blank">「服务器列表」</a>有可用的服务器地址</p>
+                        <img src="/static/img/android_5.png" class="img_how" height="475px" width="270px"/>
+                        <p>3、填写求真街账号(注册邮箱)、密码(登录密码)，然后点击飞机按钮即可</p>
+                        <p></p>
+
+
+                    </div><!-- container-->
+
+                </div>
+                <div class="tab-pane fade" id="ios">
+
+                    <div class="container">
+
+                        <br />
+                        <p>1、安装Shadowrocket，打开app store，搜索Shadowrocket然后安装，需支付6元人民币(万能淘宝，搜索“shadowrocks”，下载几乎免费)</p>
+                        <img src="/static/img/ios_1.png" class="img_how" height="405px" width="270px"/>
+                        <p>2、通过扫描二维码添加配置信息，在<a href="node.php" target="_blank">「服务器列表」</a>中生成二维码，用下图所指的地方扫描二维码</p>
+                        <img src="/static/img/ios_2.jpg" class="img_how" height="405px" width="270px"/>
+
+
+                        <p>3、添加好之后，直接点击连接（如上图红色圆圈中），<strong>首次点击时会提示是否允许VPN权限，点击Allow同意即可</strong>。已经可以使用。</p>
+
+
+                    </div><!-- container-->
+
+                </div>
+                <div class="tab-pane fade" id="windows">
+                    <div class="container">
+
+                        <br />
+                        <p>1、试用请先激活账号（注册邮箱会收到激活链接）；下载Windows客户端，地址是：<a href="download.php">www.qiuzhenstreet.com/download.php</a>。</p>
+
+                        <p>2、解压后执行，使用账号(注册邮箱)、密码(登录密码)登录</p>
+                        <img src="/static/img/windows_1.jpg" class="img_how" height="300px" width="400px"/>
+                        <p>3、打开浏览器就可以Google，可以记住账号下次直接登录</p>
+
+                        <p>4、如果出现如下提示，操作系统是windows XP或者Win7，需要安装NET Framework4.0系统组件。 </p>
+                        <p>下载<a href="http://www.microsoft.com/zh-cn/download/details.aspx?id=17718">NET Framework4.0</a></p>
+                        <div>
+                            <img src="/static/img/windows_err.jpg" class="img_how" height="119px" width="475px"/>
+                        </div>
+                        <div>
+                            <img src="/static/img/windows_err2.jpg" class="img_how" height="119px" width="475px"/>
+                        </div>
+                    </div><!-- container-->
+                </div>
+                <div class="tab-pane fade" id="mac">
+                    <div class="container">
+
+                        <br />
+                        <p>1、试用请先激活账号（注册邮箱会收到激活链接）；解压后移动到合适目录，然后启动</p>
+                        <p>2、登录本站并进入“服务器列表”，选生成二维码，在菜单栏右边找到小飞机图标，选“从屏幕上扫码二维码”，然后确定</p>
+                        <img src="/static/img/mac-t1.jpg" class="img_how" height="405px" width="270px"/>
+                        <p>3、再选“自动代理模式”，打开浏览器就可以看Google了，下次再用点击程序即可，不用再配置</p>
+
+                    </div><!-- container-->
+                </div>
+
+
+
+
+
+            </div> <!-- tab-content -->
+
+
+        </div><!-- pane-body-->
+    </div><!--panel -->
+</div><!--container-->
+
+<footer class="" id="">
+    <p align="center">
+        Copyright &copy; 2017 QiuzhenStreet.com  All Rights Reserved.
+        | <a href="tos.html">服务条款  </a>
+    </p>
+</footer>
+
+
+
+<!-- SlimScroll -->
+<script src="/static/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<!-- FastClick -->
+<script src='/static/plugins/fastclick/fastclick.min.js'></script>
+<!-- AdminLTE App -->
+<script src="/static/js/app.min.js" type="text/javascript"></script>
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        $("#invite").click(function(){
+            $.ajax({
+                type:"GET",
+                url:"_invite.php",
+                dataType:"json",
+                success:function(data){
+                    if(data.ok){
+                        window.location.reload();
+                    }else{
+                        $("#msg-error").show();
+                        $("#msg-error-p").html(data.msg);
+                    }
+                },
+                error:function(jqXHR){
+                    alert("发生错误："+jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
