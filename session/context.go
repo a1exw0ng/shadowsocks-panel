@@ -24,3 +24,4 @@ func (ctx *Context) Session() session.Session {
 func (ctx *Context) Auth() auth.Auth {
 	return auth.Default(ctx)
 }
+

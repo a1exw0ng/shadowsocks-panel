@@ -25,7 +25,7 @@ func (pub *PublicCtx) Index(c echo.Context) error {
 func (pub *PublicCtx) Download(c echo.Context) error {
 
 	//return c.String(http.StatusOK, "This is index page")
-	c.Set("tmpl", "download")
+	c.Set("tmpl", "download_org")
 	c.Set("data", map[string]interface{}{
 		"title":"About",
 	})
