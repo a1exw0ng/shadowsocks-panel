@@ -34,7 +34,7 @@ func PostLogin(c *s.Context) error {
 	fmt.Println("redirect--", redirect)
 	if a.User.IsAuthenticated() {
 		fmt.Println("is authenticated")
-		c.Redirect(http.StatusMovedPermanently, redirect)
+		c.JSON(http.StatusOK, "{\"ok\":true,\"msg\":\"登陆成功\"}")
 		return nil
 	}
 
@@ -48,10 +48,10 @@ func PostLogin(c *s.Context) error {
 			c.JSON(http.StatusBadRequest, err)
 		}
 		fmt.Println("redirect=", redirect)
-		c.Redirect(http.StatusMovedPermanently, redirect)
+		c.JSON(http.StatusOK, "{\"ok\":true,\"msg\":\"登陆成功\"}")
 		return nil
 	} else {
-		c.Redirect(http.StatusMovedPermanently, "/login")
+		c.Redirect(http.StatusOK, "/login")
 		return nil
 	}
 

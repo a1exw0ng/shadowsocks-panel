@@ -40,7 +40,7 @@ func main()  {
 
 	userGroup := e.Group("/user")
 	userGroup.Use(auth.LoginRequired())
-	userGroup.GET("/index", userCtx.Index)
+	//userGroup.GET("/index", userCtx.Index)
 	userGroup.GET("/download.html", userCtx.Download)
 	userGroup.GET("/uorder.html", userCtx.UOrder)
 	userGroup.GET("/invite.html", userCtx.Invite)
@@ -58,7 +58,7 @@ func main()  {
 	e.GET("/", pubCtx.Index)
 	e.GET("/index.html", pubCtx.Index)
 	e.GET("/download_org.html", pubCtx.Download)
-	e.GET("/uorder.html", pubCtx.UOrder)
+	/*e.GET("/uorder.html", pubCtx.UOrder)
 	e.GET("/invite.html", pubCtx.Invite)
 	e.GET("/how.html", pubCtx.How)
 	e.GET("/user.html", pubCtx.User)
@@ -66,7 +66,7 @@ func main()  {
 	e.GET("/changepw.html", pubCtx.ChangePW)
 	e.GET("/node.html", pubCtx.Node)
 	e.GET("/tos.html", pubCtx.Tos)
-	e.GET("/logout.html", pubCtx.Logout)
+	e.GET("/logout.html", pubCtx.Logout)*/
 
 	regCtx := controller.NewRegisterCtx()
 	e.GET("/register", regCtx.Register)

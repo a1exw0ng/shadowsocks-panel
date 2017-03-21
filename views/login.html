@@ -152,11 +152,13 @@
                     remember_me: $("#remember_me").val()
                 },
                 success:function(data){
+                    //alert(data);
+                    var data = eval( '(' + data + ')' );
                     if(data.ok){
                         $("#msg-error").hide(1);
                         $("#msg-success").show(1);
                         $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='user.php'", 1);
+                        window.setTimeout("location.href='user/user.html'", 1);
                     }else{
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);
@@ -164,9 +166,11 @@
                     }
                 },
                 error:function(jqXHR){
+                //alert(jqXHR);
                     $("#msg-error").hide(10);
                     $("#msg-error").show(100);
                     $("#msg-error-p").html("发生错误："+jqXHR.status);
+                    //window.setTimeout("location.href='/user/user.html'", 1);
                 }
             });
         }

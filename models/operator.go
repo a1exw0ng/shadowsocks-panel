@@ -12,7 +12,7 @@ func GetUserByNicknamePwd(name, pwd string) *User {
 	defer rows.Close()
 
 	for rows.Next(){
-		err = rows.Scan(&u.Id, &u.Nickname, &u.Password)
+		err = rows.Scan(&u.Id, &u.Nickname, &u.Password, &u.UpdatedAt, &u.Email)
 		if err != nil {
 			fmt.Println("Get Id failed", err.Error())
 			return nil
@@ -33,7 +33,7 @@ func GetUserByMailPwd(email, pwd string) *User {
 	defer rows.Close()
 
 	for rows.Next(){
-		err = rows.Scan(&u.Id, &u.Email, &u.Password)
+		err = rows.Scan(&u.Id, &u.Nickname, &u.Password, &u.UpdatedAt, &u.Email)
 		if err != nil {
 			fmt.Println("Get Id failed", err.Error())
 			return nil
