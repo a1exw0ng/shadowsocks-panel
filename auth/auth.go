@@ -109,7 +109,6 @@ func LoginRequired() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			a := Default(c)
-			fmt.Println("LoginRequired--",a)
 			if a.User.IsAuthenticated() == false {
 				uri := c.Request().RequestURI
 				path := fmt.Sprintf("%s?%s=%s", RedirectUrl, RedirectParam, uri)

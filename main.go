@@ -45,7 +45,7 @@ func main()  {
 	userGroup.GET("/uorder.html", userCtx.UOrder)
 	userGroup.GET("/invite.html", userCtx.Invite)
 	userGroup.GET("/how.html", userCtx.How)
-	userGroup.GET("/user.html", userCtx.User)
+	userGroup.GET("/user.html", handler(userCtx.User))
 	userGroup.GET("/buy.html", userCtx.Buy)
 	userGroup.GET("/changepw.html", userCtx.ChangePW)
 	userGroup.GET("/node.html", userCtx.Node)

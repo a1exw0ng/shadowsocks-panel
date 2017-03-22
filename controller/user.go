@@ -2,7 +2,10 @@ package controller
 
 import (
 	"github.com/labstack/echo"
+	s "../session"
+	"fmt"
 )
+
 
 type UserCtx struct {
 
@@ -62,12 +65,15 @@ func (pub *UserCtx) How(c echo.Context) error {
 	})
 	return nil
 }
-func (pub *UserCtx) User(c echo.Context) error {
+func (pub *UserCtx) User(c *s.Context) error {
 
 	//return c.String(http.StatusOK, "This is index page")
+	a := c.Auth()
+	fmt.Println("userId=", a.User.UniqueId())
+
 	c.Set("tmpl", "user")
 	c.Set("data", map[string]interface{}{
-		"title":"About",
+		"Email":"Email",
 	})
 	return nil
 }

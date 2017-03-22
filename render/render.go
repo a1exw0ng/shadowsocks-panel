@@ -23,8 +23,8 @@ func render() echo.MiddlewareFunc {
 			}
 
 			tmpl, context, err := getContext(c)
-			fmt.Println(tmpl)
-			fmt.Println(context)
+			//fmt.Println(tmpl)
+			//fmt.Println(context)
 
 			if err == nil{
 				c.Render(http.StatusOK, tmpl, context)
@@ -78,7 +78,7 @@ func loadTemplatesDefault(templateDir string) *multitemplate.Render {
 
 	layoutDir := templateDir
 	layouts, err := filepath.Glob(layoutDir + "*/*.html" )
-	fmt.Println("Layouts=", layouts)
+	//fmt.Println("Layouts=", layouts)
 	if err != nil {
 		panic(err.Error())
 	}
