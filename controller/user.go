@@ -3,7 +3,9 @@ package controller
 import (
 	"github.com/labstack/echo"
 	s "../session"
+	"../auth"
 	"fmt"
+	"net/http"
 )
 
 
@@ -68,8 +70,6 @@ func (pub *UserCtx) How(c echo.Context) error {
 func (pub *UserCtx) User(c *s.Context) error {
 
 	//return c.String(http.StatusOK, "This is index page")
-	a := c.Auth()
-	fmt.Println("userId=", a.User.UniqueId())
 
 	c.Set("tmpl", "user")
 	c.Set("data", map[string]interface{}{
@@ -126,6 +126,24 @@ func (pub *UserCtx) Logout(c echo.Context) error {
 	c.Set("data", map[string]interface{}{
 		"title":"About",
 	})
+
+	return nil
+}
+
+func (pub *UserCtx)LogoutHandler(c *s.Context) error {
+	fmt.Println("$$$ user.go-LogoutHandler=", c)
+	session := c.Session()
+	fmt.Println("$$$ user.go-LogoutHandler=", session)
+
+	a := c.Auth()
+	auth.Logout(session, a.User)
+
+	redirect := c.QueryParam(auth.RedirectParam)
+	if redirect == "" {
+		redirect = "/"
+	}
+
+	c.Redirect(http.StatusMovedPermanently, redirect)
 
 	return nil
 }

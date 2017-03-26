@@ -3,6 +3,7 @@ package models
 import (
 	"../auth"
 	"time"
+	"fmt"
 )
 
 
@@ -11,17 +12,17 @@ type User struct {
 	Id        uint64    `json:"id,omitempty"`
 	Nickname  string    `form:"nickname" json:"nickname,omitempty"`
 	Password  string    `form:"password" json:"-"`
-	Gender    int64     `json:"gender,omitempty"`
+	//Gender    int64     `json:"gender,omitempty"`
 	Email	  string    `json:email,omitempty`
-	Birthday  time.Time `json:"birthday,omitempty"`
-	CreatedAt time.Time `gorm:"column:created_time" json:"created_time,omitempty"`
+	//Birthday  time.Time `json:"birthday,omitempty"`
+	//CreatedAt time.Time `gorm:"column:created_time" json:"created_time,omitempty"`
 	UpdatedAt time.Time `gorm:"column:updated_time" json:"updated_time,omitempty"`
 
 	authenticated bool `form:"-" db:"-" json:"-"`
 }
 
 func GenerateAnonymousUser() auth.User {
-	return &User{}
+	return &User{0, "","","",time.Now(), false}
 }
 
 func (u User) TableName() string {
@@ -34,6 +35,7 @@ func (u *User) Login() {
 	// Update last login time
 	// Add to logged-in user's list
 	// etc ...
+	fmt.Println("models/user.go - Login=", u)
 	u.authenticated = true
 }
 
@@ -42,6 +44,7 @@ func (u *User) Login() {
 func (u *User) Logout() {
 	// Remove from logged-in user's list
 	// etc ...
+	fmt.Println("models/user.go =",u)
 	u.authenticated = false
 }
 
@@ -61,6 +64,21 @@ func (u *User) GetById(id interface{}) error {
 	// if err != nil {
 	// 	return err
 	// }
+	//var u User
+	rows, err := db.Query("select * from user where id=$1", u.Id)
+	if err != nil{
+		fmt.Println("GetUserById failed", err.Error())
+		return nil
+	}
+	defer rows.Close()
+
+	for rows.Next(){
+		err = rows.Scan(&u.Id, &u.Nickname, &u.Password, &u.UpdatedAt, &u.Email)
+		if err != nil {
+			fmt.Println("Get Id failed", err.Error())
+			return nil
+		}
+	}
 
 	return nil
 }

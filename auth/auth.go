@@ -52,23 +52,33 @@ func New(newUser func() User) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			s := session.Default(c)
+			fmt.Println("auth.go - session=",s)
 			userId := s.Get(SessionKey)
+
+			fmt.Println("auth.go - userId=", userId)
+			//func GenerateAnonymousUser() auth.User {
+			// 	return &User{0, "","","",time.Now(), false}
+			//}
 			user := newUser()
 
-			if userId != nil {
+			if userId != nil && userId.(uint64) != 0 {
+				fmt.Println("auth.go - Login Success")
 				err := user.GetById(userId)
 				if err != nil {
 					c.Logger().Errorf("Login Error: %v", err)
+					fmt.Println("Login Error: %v", err)
 				} else {
 					user.Login()
 				}
 			} else {
+				fmt.Println("auth.go - Login Failed")
 				c.Logger().Infof("Login status: No UserId")
 			}
 
+			fmt.Println("New - user=", user)
 			auth := Auth{user}
 			c.Set(DefaultKey, auth)
-
+			fmt.Println("New - =",c.QueryString(),"c=", c)
 			return next(c)
 		}
 	}
@@ -96,6 +106,8 @@ func (a Auth) LogoutTest(s session.Session) {
 
 // Logout will clear out the session and call the Logout() user function.
 func Logout(s session.Session, user User) {
+	fmt.Println("Logout-session=",s)
+	fmt.Println("SessionKey=", SessionKey)
 	user.Logout()
 	s.Delete(SessionKey)
 	s.Save()
@@ -108,7 +120,9 @@ func Logout(s session.Session, user User) {
 func LoginRequired() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
+			fmt.Println("######## Login Required #########")
 			a := Default(c)
+			fmt.Println("LoginRequired=", a.User.IsAuthenticated())
 			if a.User.IsAuthenticated() == false {
 				uri := c.Request().RequestURI
 				path := fmt.Sprintf("%s?%s=%s", RedirectUrl, RedirectParam, uri)

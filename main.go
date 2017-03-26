@@ -21,7 +21,7 @@ func main()  {
 
 	// Context自定义
 	e.Use(session.NewContext())
-
+	e.Debug = true
 	e.Renderer = render.LoadTemplates()
 	e.Use(render.Render())
 	e.Static("/static", "static")
@@ -29,50 +29,51 @@ func main()  {
 	e.Use(session.Session())
 	e.Use(auth.New(models.GenerateAnonymousUser))
 
+	// Public pages
+	pubCtx := controller.NewPublicCtx()
+
+	e.GET("/", handler(pubCtx.Index))
+	e.GET("/index.html", handler(pubCtx.Index))
+	e.GET("/download_org.html", handler(pubCtx.Download))
+
+	regCtx := controller.NewRegisterCtx()
+	e.GET("/register", regCtx.Register)
+	e.POST("/register", handler(regCtx.PostRegister))
+
+	loginCtx := controller.NewLoginCtx()
+	e.GET("/login", handler(loginCtx.Login))
+	e.POST("/login", handler(loginCtx.PostLogin))
+
+	e.GET("/logout", handler(loginCtx.LogoutHandler))
+	e.GET("/logout.html", handler(loginCtx.LogoutHandler))
+
 	// Admin pages
 	adminCtx := controller.NewAdminCtx()
 	adminGroup := e.Group("/admin")
 	adminGroup.Use(auth.LoginRequired())
-	adminGroup.GET("/index", adminCtx.Index)
+	{
+		adminGroup.GET("/index", adminCtx.Index)
+	}
 
 	// User pages
 	userCtx := controller.NewUserCtx()
 
 	userGroup := e.Group("/user")
 	userGroup.Use(auth.LoginRequired())
-	//userGroup.GET("/index", userCtx.Index)
-	userGroup.GET("/download.html", userCtx.Download)
-	userGroup.GET("/uorder.html", userCtx.UOrder)
-	userGroup.GET("/invite.html", userCtx.Invite)
-	userGroup.GET("/how.html", userCtx.How)
-	userGroup.GET("/user.html", handler(userCtx.User))
-	userGroup.GET("/buy.html", userCtx.Buy)
-	userGroup.GET("/changepw.html", userCtx.ChangePW)
-	userGroup.GET("/node.html", userCtx.Node)
-	userGroup.GET("/tos.html", userCtx.Tos)
-	userGroup.GET("/logout.html", handler(controller.LogoutHandler))
-
-	// Public pages
-	pubCtx := controller.NewPublicCtx()
-
-	e.GET("/", pubCtx.Index)
-	e.GET("/index.html", pubCtx.Index)
-	e.GET("/download_org.html", pubCtx.Download)
-	/*e.GET("/uorder.html", pubCtx.UOrder)
-	e.GET("/invite.html", pubCtx.Invite)
-	e.GET("/how.html", pubCtx.How)
-	e.GET("/user.html", pubCtx.User)
-	e.GET("/buy.html", pubCtx.Buy)
-	e.GET("/changepw.html", pubCtx.ChangePW)
-	e.GET("/node.html", pubCtx.Node)
-	e.GET("/tos.html", pubCtx.Tos)
-	e.GET("/logout.html", pubCtx.Logout)*/
-
-	regCtx := controller.NewRegisterCtx()
-	e.GET("/register", regCtx.Register)
-	e.POST("/register", handler(regCtx.PostRegister))
-	e.GET("/login", controller.Login)
-	e.POST("/login", handler(controller.PostLogin))
+	{
+		//userGroup.GET("/index", userCtx.Index)
+		userGroup.GET("/download.html", userCtx.Download)
+		userGroup.GET("/uorder.html", userCtx.UOrder)
+		userGroup.GET("/invite.html", userCtx.Invite)
+		userGroup.GET("/how.html", userCtx.How)
+		userGroup.GET("/user.html", handler(userCtx.User))
+		userGroup.GET("/buy.html", userCtx.Buy)
+		userGroup.GET("/changepw.html", userCtx.ChangePW)
+		userGroup.GET("/node.html", userCtx.Node)
+		userGroup.GET("/tos.html", userCtx.Tos)
+		userGroup.GET("/logout", handler(userCtx.LogoutHandler))
+		userGroup.GET("/logout.html", handler(userCtx.LogoutHandler))
+	}
 
 	e.Logger.Fatal(e.Start(":8082"))
 }

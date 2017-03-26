@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/labstack/echo"
+	s "../session"
 )
 
 type PublicCtx struct {
@@ -12,7 +13,7 @@ func NewPublicCtx() *PublicCtx {
 	return &PublicCtx{}
 }
 
-func (pub *PublicCtx) Index(c echo.Context) error {
+func (pub *PublicCtx) Index(c *s.Context) error {
 
 	//return c.String(http.StatusOK, "This is index page")
 	c.Set("tmpl", "index")
@@ -22,7 +23,7 @@ func (pub *PublicCtx) Index(c echo.Context) error {
 	return nil
 }
 
-func (pub *PublicCtx) Download(c echo.Context) error {
+func (pub *PublicCtx) Download(c *s.Context) error {
 
 	//return c.String(http.StatusOK, "This is index page")
 	c.Set("tmpl", "download_org")

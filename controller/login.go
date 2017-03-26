@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"github.com/labstack/echo"
 	"net/http"
 	s "../session"
 	"../auth"
@@ -9,56 +8,91 @@ import (
 	"fmt"
 )
 
-func Login(c echo.Context) error {
+type Response struct {
+	Ok bool `json:ok`
+	Msg string `json:msg`
+}
+
+type Login struct {
+
+}
+
+func NewLoginCtx() *Login {
+	return &Login{}
+}
+func (l *Login)Login(c *s.Context) error {
+	fmt.Println("$$$$Login.go - Login")
+
+	//c.Set("tmpl", "login")
+	//c.Set("data", map[string]interface{}{
+	//	"title":"Login",
+	//})
+	//return nil
+	redirect := c.QueryParam(auth.RedirectParam)
+
+	a := c.Auth()
+	if a.User.IsAuthenticated() {
+		fmt.Println("###Login.go - Login=", a.User.IsAuthenticated())
+		if redirect == "" {
+			redirect = "/user/user.html"
+		}
+		c.Redirect(http.StatusMovedPermanently, redirect)
+		return nil
+	}
+
 	c.Set("tmpl", "login")
 	c.Set("data", map[string]interface{}{
-		"title":"Login",
+		"title":         "Login",
 	})
+
 	return nil
 }
 
-func PostLogin(c *s.Context) error {
+func (l *Login)PostLogin(c *s.Context) error {
 
+	resp := Response{Ok:true, Msg:"登陆成功"}
 	fmt.Println(c.FormParams())
 	//name := c.FormValue("username")
 	password := c.FormValue("passwd")
 	email := c.FormValue("email")
 	redirect := c.QueryParam(auth.RedirectParam)
-	fmt.Println(c.QueryString())
 	fmt.Println("auth.RedirectParam", auth.RedirectParam, redirect)
 	if redirect == "" {
 		redirect = "/"
 	}
 
 	a := c.Auth()
-	fmt.Println("redirect--", redirect)
+
 	if a.User.IsAuthenticated() {
-		fmt.Println("is authenticated")
-		c.JSON(http.StatusOK, "{\"ok\":true,\"msg\":\"登陆成功\"}")
+		fmt.Println("PostLogin - is authenticated")
+		c.JSON(http.StatusOK, resp)
 		return nil
 	}
 
 	//u := models.GetUserByNicknamePwd(name, password)
 	u := models.GetUserByMailPwd(email, password)
-	fmt.Println("user=", u)
+	fmt.Println("PostLogin - user=", u)
 	if u != nil{
 		session := c.Session()
 		err := auth.AuthenticateSession(session, u)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, err)
 		}
-		fmt.Println("redirect=", redirect)
-		c.JSON(http.StatusOK, "{\"ok\":true,\"msg\":\"登陆成功\"}")
+		c.JSON(http.StatusOK, resp)
 		return nil
 	} else {
+		fmt.Println("Login Failed Redirect to /login")
 		c.Redirect(http.StatusOK, "/login")
 		return nil
 	}
 
 }
 
-func LogoutHandler(c *s.Context) error {
+func (l *Login)LogoutHandler(c *s.Context) error {
+	fmt.Println("$$$ login.go-LogoutHandler=", c)
 	session := c.Session()
+	fmt.Println("$$$ login.go-LogoutHandler=", session)
+
 	a := c.Auth()
 	auth.Logout(session, a.User)
 

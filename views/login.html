@@ -152,17 +152,19 @@
                     remember_me: $("#remember_me").val()
                 },
                 success:function(data){
+
+                    //var data = eval( '(' + data + ')' );
                     //alert(data);
-                    var data = eval( '(' + data + ')' );
-                    if(data.ok){
+                    if(data.Ok){
+                        //alert(data.ok);
                         $("#msg-error").hide(1);
                         $("#msg-success").show(1);
-                        $("#msg-success-p").html(data.msg);
+                        $("#msg-success-p").html(data.Msg);
                         window.setTimeout("location.href='user/user.html'", 1);
                     }else{
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);
-                        $("#msg-error-p").html(data.msg);
+                        $("#msg-error-p").html(data.Msg);
                     }
                 },
                 error:function(jqXHR){
