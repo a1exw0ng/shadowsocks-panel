@@ -32,3 +32,6 @@ Use the `echo` feature to generate template when the request being processed：
 The Middleware
 
 
+Bugs
+---
+1. User login without check the username and password, should be fixed.
