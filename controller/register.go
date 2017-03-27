@@ -31,12 +31,13 @@ func (pub *Register) PostRegister(c *s.Context) error {
 	fmt.Println(c.FormValue("password"))
 	fmt.Println(c.FormValue("email"))
 
-	username := c.FormValue("username")
-	password := c.FormValue("password")
+	username := c.FormValue("email") //默认用户名和密码一致
+	password := c.FormValue("passwd")
+	email := c.FormValue("email")
 
 	if (false == models.CheckUserExistence(username)){
 
-		err := models.CreateUserByNamePwd(username, password)
+		err := models.CreateUserByNamePwdEmail(username, password, email)
 		if err != nil{
 			fmt.Println("Insert into database failed", err.Error())
 			return err

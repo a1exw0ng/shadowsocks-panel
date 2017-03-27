@@ -16,13 +16,14 @@ type User struct {
 	Email	  string    `json:email,omitempty`
 	//Birthday  time.Time `json:"birthday,omitempty"`
 	//CreatedAt time.Time `gorm:"column:created_time" json:"created_time,omitempty"`
+	Update string
 	UpdatedAt time.Time `gorm:"column:updated_time" json:"updated_time,omitempty"`
 
 	authenticated bool `form:"-" db:"-" json:"-"`
 }
 
 func GenerateAnonymousUser() auth.User {
-	return &User{0, "","","",time.Now(), false}
+	return &User{0, "","","","",time.Now(), false}
 }
 
 func (u User) TableName() string {

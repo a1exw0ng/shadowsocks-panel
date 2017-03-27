@@ -33,7 +33,7 @@ func GetUserByMailPwd(email, pwd string) *User {
 	defer rows.Close()
 
 	for rows.Next(){
-		err = rows.Scan(&u.Id, &u.Nickname, &u.Password, &u.UpdatedAt, &u.Email)
+		err = rows.Scan(&u.Id, &u.Nickname, &u.Password, &u.Update, &u.Email)
 		if err != nil {
 			fmt.Println("Get Id failed", err.Error())
 			return nil
@@ -43,8 +43,8 @@ func GetUserByMailPwd(email, pwd string) *User {
 	return &u
 }
 
-func CreateUserByNamePwd(name, pwd string) error{
-	_, err := db.Exec("insert into user (name, password) values ($1, $2)", name, pwd)
+func CreateUserByNamePwdEmail(name, pwd, email string) error{
+	_, err := db.Exec("insert into user (name, password, email) values ($1, $2, $3)", name, pwd, email)
 	if err != nil{
 		fmt.Println("Insert into user failed", err.Error())
 		return err
@@ -62,7 +62,7 @@ func CheckUserExistence(name string) bool{
 	defer rows.Close()
 
 	for rows.Next() {
-		err = rows.Scan(&u.Id, &u.Nickname, &u.Password)
+		err = rows.Scan(&u.Id, &u.Nickname, &u.Password, &u.UpdatedAt, &u.Email)
 		if err != nil {
 			fmt.Println("Get UserId failed", err.Error())
 			return false
